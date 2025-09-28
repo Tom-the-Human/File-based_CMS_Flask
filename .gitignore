@@ -1,0 +1,12 @@
+# Virtual Environment
+fb_cms_venv/
+
+# Byte-compiled files
+__pycache__/
+*.pyc
+
+# Operating System specific files
+.DS_Store
+
+# Editor specific files (optional)
+.vscode/
