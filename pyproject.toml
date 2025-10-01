@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "File-based_CMS_Flask"
+version = "0.1.0"
+description = "A simple Flask application"
+readme = "README.md"
+authors = [
+  {name = "Tom-the-Human", email = "tom.hodges.83@gmail.com"},
+]
+license = {file = "LICENSE.md"}
+requires-python = ">=3.10"
+dependencies = [
+    "Flask",
+    "gunicorn",
+    "Jinja2",
+]

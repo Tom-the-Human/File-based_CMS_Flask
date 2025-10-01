@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  {% if data %}
+    <ul>
+      {% for file_name in data %}
+        <li>
+          <a href="{{ url_for('file_content', file_name=file_name) }}">
+            {{ file_name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock content %}
