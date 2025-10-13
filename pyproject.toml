@@ -16,4 +16,5 @@ dependencies = [
     "Flask",
     "gunicorn",
     "Jinja2",
+    "markdown (>=3.9,<4.0)",
 ]

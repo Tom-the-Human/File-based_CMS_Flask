@@ -1,6 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+  {% for message in get_flashed_messages() %}
+    <p class="message">{{ message }}</p>
+  {% endfor %}
   {% if data %}
     <ul>
       {% for file_name in data %}
