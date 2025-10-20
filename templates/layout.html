@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en-US">
   <head>
-    <title>CMS</title>
+    <title>File List</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/app.css') }}">
   </head>
   <body>
     <header>
@@ -13,11 +14,9 @@
         {% endblock header_links %}
       </div>
     </header>
-    <!-- Deviates from LS solution, which puts the flash message 
-     in the extension template (e.g. index.html) instead of here in layout.html -->
-    {% with messages = get_flashed_messages() %}
-      <p>{{ message }}</p>
-    {% endwith %}
+    {% for message in get_flashed_messages() %}
+      <p class="message">{{ message }}</p>
+    {% endfor %}
     <main>
       {% block content %}
 
