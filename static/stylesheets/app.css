@@ -11,3 +11,7 @@ body {
 form.inline {
     display: inline;
 }
+
+.user-status {
+    margin-top: 1em;
+}
