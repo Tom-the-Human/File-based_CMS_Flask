@@ -24,6 +24,21 @@ def get_data_path():
     else:
         return os.path.join(os.path.dirname(__file__), 'cms', 'data')
 
+def valid_file_type(file_name):
+    parts = file_name.split('.')
+    valid_extensions = ['txt', 'md', '']
+
+    if len(parts) is 1:
+        parts.append('txt')
+    elif len(parts) > 2:
+        flash("Invalid file name: use no more than 1 dot with 1 extension")
+        return False
+    elif parts[1] not in valid_extensions:
+        flash("Invalid file type: only .txt and .md are supported")
+        return False
+    
+    return True
+    
 def valid_credentials(username, password):
     credentials = load_user_credentials()
 
@@ -125,6 +140,8 @@ def create_file():
         return render_template('new.html'), 422
     elif os.path.exists(file_path):
         flash(f'{file_name} already exists.')
+        return render_template('new.html'), 422
+    elif not valid_file_type(file_name):
         return render_template('new.html'), 422
     
     with open(file_path, 'w') as f:
