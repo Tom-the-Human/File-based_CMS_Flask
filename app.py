@@ -73,7 +73,7 @@ def require_signed_in_user(func):
             return redirect(url_for('sign_in_form'))
     return decorated
 
-def get_next_available_File_name(file_path):
+def get_next_available_file_name(file_path):
     if not os.path.exists(file_path):
         return file_path
 
@@ -181,7 +181,7 @@ def duplicate_file(file_name):
         with open(file_path, 'r') as f:
             content = f.read()
 
-        with open(get_next_available_File_name(file_path), 'w') as f:
+        with open(get_next_available_file_name(file_path), 'w') as f:
             f.write(content)
             flash(f'{file_name} has been duplicated.')
             return redirect(url_for('index'))
