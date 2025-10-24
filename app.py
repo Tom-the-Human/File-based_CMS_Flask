@@ -12,6 +12,7 @@ from functools import wraps
 from markdown import markdown
 import bcrypt
 import os
+import re
 import yaml
 
 app = Flask(__name__)
@@ -71,6 +72,27 @@ def require_signed_in_user(func):
             flash("You must be signed in to do that.")
             return redirect(url_for('sign_in_form'))
     return decorated
+
+def get_next_available_File_name(file_path):
+    if not os.path.exists(file_path):
+        return file_path
+
+    directory, file_name = os.path.split(file_path)
+    stem, extension = os.path.splitext(file_name)
+
+    match = re.match(r'^(.*?)(\s*\(\d+\))?$', stem)
+    base = match.group(1)
+
+    counter = 1
+    while True:
+        new_stem = f"{base}({counter})"
+        new_file_name = new_stem + extension
+        new_file_path = os.path.join(directory, new_file_name)
+
+        if not os.path.exists(new_file_path):
+            return new_file_path
+
+        counter += 1
 
 @app.route('/')
 @app.route('/index')
@@ -148,7 +170,22 @@ def create_file():
         f.write('')
         flash(f'{file_name} has been created.')
         return redirect(url_for('index'))
-    
+
+@app.route('/<file_name>/duplicate', methods=['POST'])
+@require_signed_in_user
+def duplicate_file(file_name):
+    data_path = get_data_path()
+    file_path = f'{data_path}/{file_name}'
+
+    if os.path.isfile(file_path):
+        with open(file_path, 'r') as f:
+            content = f.read()
+
+        with open(get_next_available_File_name(file_path), 'w') as f:
+            f.write(content)
+            flash(f'{file_name} has been duplicated.')
+            return redirect(url_for('index'))
+
 @app.route('/<file_name>/delete', methods=['POST'])
 @require_signed_in_user
 def delete_file(file_name):
